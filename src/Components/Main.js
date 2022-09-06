@@ -1,9 +1,11 @@
 import ProductGallery from "./ProductGallery";
+import Cart from "./Cart";
 
-function Main ({products}) {
+function Main ({products,cart,setCart}) {
     return (
         <div className="appMain">
-            <ProductGallery products = {products}/>
+            <ProductGallery products = {products} cart = {cart} setCart = {setCart}/>
+            <Cart cart = {cart} setCart = {setCart}/>
         </div>
     )
     

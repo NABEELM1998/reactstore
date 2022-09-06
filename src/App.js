@@ -1,24 +1,33 @@
-import Header from "./Components/Header";
-import Main from "./Components/Main";
-import Footer from "./Components/Footer";
-const App = () => {
-    const siteName = 'ReactStore'
-    const products = [
-        {id:200, name:"Product One", price:75},
-        {id:201, name:"Product Two", price:45},
-        {id:202, name:"Product Three", price:60},
-        {id:203, name:"Product Four", price:35},
-        {id:204, name:"Product Five", price:40},
-        {id:208, name:"Product Six", price:55},
-    ]
-    return (
-        <div className="appWrapper">
-            <Header siteName = {siteName}/>
-            <Main products = {products}></Main>
-            <Footer footerName = {siteName  }/>
-        </div>
+import Header from "./Components/Header"
+import Main  from "./Components/Main"
+import Footer from "./Components/Footer"
+//import productData from "./data.json"
+import {useState,useEffect} from "react"
 
+const App = () => {
+   
+    const siteName = "React Shop"
+    const [cart, setCart] = useState([])
+    const [productData,setproductData] = useState([])
+    console.log(cart)
+    const getProducts = async() => {
+        let res = await fetch("http://localhost:4000/products")
+        let data = await res.json()
+        setproductData(data)
+        
+    }
+    useEffect( () => {
+        getProducts()
+    },[])
+    
+    console.log(productData)
+    return(
+        <div className="appWrapper">
+            <Header name={siteName} />
+            <Main products={productData} cart={cart} setCart={setCart}/>
+            <Footer name={siteName} />
+        </div>
     )
 }
 
-export default App;
+export default App
