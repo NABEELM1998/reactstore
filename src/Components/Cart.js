@@ -1,30 +1,47 @@
-import Cartitem from "./Cartitem";
+import React from "react";
+import CartItem from "./CartItem";
 import { currencyFormatter } from "../util";
+import { useAppContext } from "../Hooks/useAppContext";
+function Cart() {
+ 
+  const {state,dispatch} = useAppContext()
+    console.log("cart In cart.js",state.cart)
+  const subTotal = state.cart.reduce((acc, curr) => {
+    return acc + curr.count * curr.price;
+  }, 0);
 
-const Cart = ({cart,setCart}) => {
-    let subtotal = cart.reduce((acc,curr) => {
-        return acc += curr.count * curr.price 
-    },0)
-    const clearCartHandler = () => {
-        setCart([])
-    }
-    return cart.length ?(
-        <div className="cart">
-            <h2>Cart</h2>
-            <div className="cartList">
-                {
-                    cart.map( (cartProduct) => <Cartitem cart = {cart} setCart = {setCart} key = {cartProduct.id} {...cartProduct}/>)
-                }
-            </div>
-            <div className="cartTotal">total:{currencyFormatter(subtotal)}</div>
-            <div className="cartFooter">
-                <button className="clear" onClick={clearCartHandler} >clear cart</button>
-                <button className="checkout">checkout</button>    
-            </div> 
-        </div>
-    ):(<div className="cart">
-        <h3>Cart</h3>
-        <p>Please add items to your cart</p>
-    </div>)
+  const clearCart = () => {
+    // setCart([]);
+    dispatch({
+      type:"CLEAR_CART"
+      
+    })
+  };
+
+  return (state.cart.length ? (
+    <div className="cart">
+      <h3>Cart</h3>
+      <div className="cartList">
+        { state.cart.map((cartProduct) => {
+          return <CartItem key={cartProduct.id} {...cartProduct} />;
+        }) }
+      </div>
+
+      <div className="cartTotal">Total - {currencyFormatter(subTotal)}</div>
+
+      <div className="cartFooter">
+        <button onClick={clearCart} className="clear">
+          Clear Cart
+        </button>
+        <button className="checkout">Checkout</button>
+      </div>
+    </div>
+  ) : (
+    <div className="cart">
+      <h3>Cart</h3>
+      <p>Please add Products to the cart</p>
+    </div>
+  ));
 }
+
 export default Cart;

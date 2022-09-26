@@ -1,13 +1,11 @@
-import ProductGallery from "./ProductGallery";
-import Cart from "./Cart";
+import React from 'react'
 
-function Main ({products,cart,setCart}) {
-    return (
-        <div className="appMain">
-            <ProductGallery products = {products} cart = {cart} setCart = {setCart}/>
-            <Cart cart = {cart} setCart = {setCart}/>
-        </div>
-    )
-    
+function Main({children}) {
+  return (
+    <div className="appMain">
+        {children}
+    </div>
+  )
 }
-export default Main;
+
+export default Main

@@ -1,11 +1,16 @@
 import React from "react";
 import ProductItem from "./ProductItem";
-function ProductGallery({products, cart, setCart}) {
+import { useAppContext } from "../Hooks/useAppContext";
+function ProductGallery() {
+    const {state} = useAppContext()
+    if(state.products_loading){
+      return <h1>PRODUCTS LOADING</h1>
+    }
     return (
-    <div className="productGallery">    
+     <div className="productGallery">    
       {
-        products.map((product) => {
-           return <ProductItem key={product.id} {...product} cart={cart} setCart={setCart} />
+        state.products.map((product) => {
+           return <ProductItem key={product.id} {...product} />
         })
       }     
     </div>

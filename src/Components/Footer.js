@@ -1,8 +1,12 @@
-function Footer ({footerName}) {
-    return (
-        <div className="appFooter">
-            <p>{footerName} created using React</p>
-        </div>
-    )
+import React from 'react'
+import { useAppContext } from '../Hooks/useAppContext'
+function Footer() {
+  const {state:{siteName}} = useAppContext()
+  return (
+    <div className="appFooter">
+        <p> {siteName} developed with ReactJS  </p>
+    </div>
+  )
 }
-export default Footer;
+
+export default Footer
